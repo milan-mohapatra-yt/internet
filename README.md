@@ -331,7 +331,7 @@ The Internet’s ability to connect billions of devices relies on a **structured
 
 The **Domain Name System (DNS)** is like the Internet’s phonebook. It translates human-readable domain names (like `example.com`) into IP addresses (like `93.184.216.34`). DNS is hierarchical, meaning it’s structured in levels.
 
-![DNS Hierarchy](https://github.com/ZAO-01/internet/blob/main/assets/dns-hierarchy.png)
+![DNS Hierarchy](https://github.com/milan-mohapatra-yt/internet/blob/main/assets/dns-hierarchy.png)
 
 ### **a) Root Level**
 
