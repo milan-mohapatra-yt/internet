@@ -396,5 +396,356 @@ RIRs ensure **fair and efficient distribution of IP addresses** and maintain pub
 - **IPv6** uses 128-bit addresses, providing a virtually unlimited number of IP addresses.  
 - RIRs are now responsible for **allocating IPv6 addresses** and managing transition strategies for IPv4 depletion, ensuring the Internet can scale for billions more devices.  
 
+## 1.2 **Computer Networking Basics**
+
+### Difference between Network and Internet
+
+| **Network**                        | **Internet**                                        |
+| ---------------------------------- | --------------------------------------------------- |
+| A small group of connected devices | A worldwide network connecting millions of networks |
+| Can exist without the Internet     | Cannot exist without networks                       |
+| Example: home LAN                  | Example: the global Internet                        |
+
+### **1.2.1 Data Transmission (bits, bytes, latency, bandwidth)**
+
+Data transmission is the process of sending digital data (bits) from one device to another through a communication medium such as copper cables, fiber optics, or wireless radio waves.
+
+> ### **What Happens During Data Transmission?**
+>
+> When you send a message, open a website, or stream a video, your device:
+>
+> 1. Converts data into bits (0s and 1s)
+> 2. Encodes those bits into a physical signal
+>
+>    * electrical pulses in copper cables
+>    * light pulses in fiber
+>    * radio waves in Wi-Fi / cellular
+> 3. Transmits the signal across the medium
+> 4. The receiving device decodes the signal back into bits
+
+### Bits, Bytes & Data Units
+
+In the context of **data transmission**, **“Bits, Bytes, & Data Units”** refer to the fundamental building blocks used to measure, send, and interpret digital information. Here’s a clear breakdown:
+
+
+### Bit (b) — The Smallest Unit
+
+* A **bit** is the smallest unit of digital data.
+* It can have only **two values:** 0 or 1.
+* In data transmission, **speed is often measured in bits per second (bps)** because data is sent one bit at a time over a channel.
+
+**Examples:**
+
+* 1 kbps = 1,000 bits per second
+* 1 Gbps = 1,000,000,000 bits per second
+
+### Byte (B) — 8 Bits
+
+* A **byte** consists of **8 bits**.
+* It's the standard unit for measuring stored data (files, memory, etc.).
+
+**Examples:**
+
+* 1 KB = 1,024 bytes (for storage; sometimes 1,000 bytes in networking contexts)
+* A character like “A” typically occupies **1 byte**.
+
+> Why Use Bits for Transmission but Bytes for Storage?
+>
+> * **Transmission** deals with the electrical/optical signals, which transfer **bits** one by one.
+> * **Storage** deals with data in usable chunks, so **bytes** make more sense.
+
+### Larger Data Units (Common in Transmission & Storage)
+
+### Bit-based (for transmission speeds):
+
+* **kb** – kilobit (1,000 bits)
+* **Mb** – megabit (1,000,000 bits)
+* **Gb** – gigabit
+* **Tb** – terabit
+
+Used for: Internet speeds, network bandwidth, Ethernet, Wi-Fi.
+
+### Byte-based (for stored data):
+
+* **kB** – kilobyte (1,000 or 1,024 bytes)
+* **MB** – megabyte
+* **GB** – gigabyte
+* **TB** – terabyte
+
+Used for: File sizes, disk capacity, memory.
+
+### Important Distinction
+
+* **1 Byte (B) = 8 bits (b)**
+  So:
+
+  * **100 Mbps ≠ 100 MB/s**
+  * 100 Mbps ≈ 12.5 MB/s (divide by 8)
+
+This is why your download speeds often look lower than your ISP's advertised speeds—because they use **megabits**, but browsers show **megabytes per second**.
+
+### Data Units in Data Transmission
+
+In networking, additional units describe how data moves:
+
+* **Bandwidth:** maximum bits per second a channel can carry.
+* **Throughput:** actual successful data rate.
+* **Latency:** time delay (ms).
+* **Packet:** a structured chunk of data (hundreds or thousands of bytes).
+
+These units relate to bits and bytes but describe *data flow behavior* rather than size alone.
+
+### How Data Is Physically Carried Across Media
+
+Digital data (0s and 1s) doesn’t travel as text—it travels as **physical signals**:
+
+### a. Electrical Signals (Ethernet Copper Cables)
+
+* Voltage changes represent bits.
+* Uses encoding schemes such as NRZ, PAM-3, PAM-4, etc.
+* Susceptible to electromagnetic interference and distance limitations.
+
+### b. Light Pulses (Fiber Optic Cables)
+
+* Light ON = 1, Light OFF = 0 (in its simplest conceptual form).
+* Extremely low signal loss → supports long distances.
+* Immune to electrical interference.
+* Can use multiplexing (DWDM) to send multiple wavelengths simultaneously.
+
+### c. Radio Waves (Wi-Fi, Cellular, Bluetooth, Satellite)
+
+* Data encoded using modulation (QPSK, QAM, OFDM, etc.).
+* Travels through the air → subject to noise, fading, multipath reflections.
+* Requires error correction and retransmission protocols.
+
+Across all mediums, the core idea remains:
+**We encode digital bits into a physical signal, transmit it, then decode it back into bits.**
+
+### Propagation Delay & Physical Limits
+
+Even at the speed of light, information takes time to move across distance.
+
+### Propagation Delay
+
+The time it takes for a signal to physically travel across the medium.
+
+* Fiber: ~200,000 km/s
+* Copper: ~66% the speed of light
+* Radio (space): ~300,000 km/s
+
+Example:
+A signal from New York to London (approx. 5,600 km):
+Propagation delay ≈ 28 ms *one-way*, 56 ms *round-trip*.
+This is the baseline latency—*you can’t beat physics*.
+
+### Jitter and Why It Matters
+
+Jitter is **Variation in latency over time.**
+
+* If one packet arrives in 20 ms and the next arrives in 60 ms, jitter = high.
+* Critical for:
+
+  * Real-time voice (VoIP)
+  * Video streaming
+  * Online gaming
+* Networks use **jitter buffers** to smooth out variation.
+
+High jitter makes real-time communication feel choppy or delayed even if bandwidth is high.
+
+### Packet Loss
+
+Packet Loss **When packets never reach their destination.**
+
+usually caused by:
+
+* Congestion (router buffers overflow)
+* Wireless interference
+* Faulty cables or hardware
+* Long-distance radio links
+* Misconfiguration or overloaded devices
+
+Effects of packet loss:
+
+* TCP retransmits lost packets → reduces throughput
+* Video calls freeze
+* Games experience lag or “rubberbanding”
+* Web pages load slowly
+
+Even **1% packet loss** can dramatically harm real throughput on a fast link.
+
 ---
 
+### 1.2.2 **OSI Model & TCP/IP Model**
+
+When data travels across a network—whether you're loading a webpage, sending a message, or streaming video—your device follows a structured communication framework. Two foundational models define how this happens: the **OSI Model** and the **TCP/IP Model**.
+
+### Why Communication Models Matter
+Networks are complex. Different devices, vendors, and applications need common rules to communicate effectively.  
+Communication models provide:
+
+- A **layered structure**  
+- **Standard terminology**  
+- Clear **responsibilities per layer**  
+- Vendor/device **interoperability**  
+
+The OSI model is conceptual, while the TCP/IP model is practical and used on the Internet. The OSI model was developed before many modern protocols were invented, and after TCP/IP became widely adopted, the OSI model gradually faded from practical use.
+
+### **The OSI Model (7 Layers)**
+
+The OSI model (Open Systems Interconnection model) is a 7-layer conceptual framework used to understand, design, and troubleshoot how data moves across a network.
+It does not define real protocols rather, it explains how networking should work in an organized way.
+
+![OSI 7 Layar diagram](https://github.com/milan-mohapatra-yt/internet/assets/osi-7layera-diagram.png)
+
+
+### **Layer 7: Application**
+- The Application Layer provides network services directly to user applications such as browsers, email clients, file transfer tools, and messaging apps.
+- It does not refer to the application itself, but to the services and protocols that enable applications to communicate over a network. 
+- Protocols: **HTTP, HTTPS, SMTP, POP3, IMAP, FTP / SFTP, DNS, SSH, Telnet**
+
+### **Layer 6: Presentation**
+- It translates, formats, encrypts / decryption, and compresses / decompression data so that different systems can understand each other.
+- Data serialization (JSON, XML)
+
+### **Layer 5: Session**
+- The Session Layer is responsible for managing, controlling, and maintaining communication sessions between two devices or applications.
+- A session is simply a connection that stays open while two devices exchange data.
+- Handles setup, maintenance, and termination  
+- Uses sockets and dialogues
+
+### **Layer 4: Transport**
+- The Transport layer is responsible for end-to-end communication between devices.
+- It manages how much data is sent, how fast it's sent, and ensures that data arrives without errors. 
+- Protocols: **TCP**, **UDP**
+
+### **Layer 3: Network**
+Networking layer responsible for:
+- **Logical addressing using IP**: It assigns and uses IP addresses to identify devices on different networks. 
+- **Routing between networks**: It determines the best path for data to travel from the source to the destination across multiple networks.
+- **Packet forwarding**: It determines the best path for data to travel from the source to the destination across multiple networks.
+- Purpose of networking layer is to move data between networks, not just within a single local network.
+- Protocols: **IPv4, IPv6, ICMP**
+
+### **Layer 2: Data Link**
+Divided into:
+- **LLC (Logical Link Control)**: Handles error checking, flow control, and communication with Layer 3 (Network Layer).
+- **MAC (Media Access Control)**: Handles MAC addressing and control of how devices share access to the network.
+
+Handles:
+- MAC addressing: Uses MAC addresses to identify devices on the same network.
+  - Permanent physical address (burned into the network card)
+  - Example MAC: 44:A1:23:BC:9F:10
+- Frame creation: It breaks data into frames (Layer 2 data units).
+  - Frames include:
+    - source MAC address
+    - destination MAC address
+
+- Error-checking information: Layer 2 frames include fields like the Frame Check Sequence (FCS), which stores a checksum used to detect corruption. This helps ensure that only valid, uncorrupted frames are processed.
+- Switch operations: Switches operate at Layer 2, learning MAC addresses, building a MAC table, and forwarding frames to the correct port. If the destination is unknown, they flood the frame; if known, they forward it; if unnecessary, they filter it.
+- Error detection (CRC): Layer 2 uses CRC (Cyclic Redundancy Check) to detect transmission errors. The sender calculates a CRC value and places it in the frame; the receiver recalculates it and compares. If it doesn't match, the frame is discarded.
+
+### **Layer 1: Physical**
+
+The Physical Layer is the first layer of the OSI model. It is responsible for the actual transmission of raw bits (0s and 1s) over a physical medium. It deals with hardware components, such as cables, connectors, switches, and electrical/optical/radio signals. This layer defines voltage levels, data rates, pin layouts, and physical specifications needed to send data between devices.
+
+
+# ## **3. The TCP/IP Model (4 Layers)**
+TCP/IP is the **actual** model used on today's networks and the Internet.
+
+---
+
+## ### **Layer 4 — Application**
+Combines OSI Layers 5, 6, 7  
+Examples: **HTTP, DNS, DHCP, SMTP**
+
+---
+
+## ### **Layer 3 — Transport**
+Same function as OSI Layer 4  
+Protocols: **TCP (reliable)**, **UDP (fast, lightweight)**
+
+---
+
+## ### **Layer 2 — Internet**
+Maps to OSI Layer 3  
+Handles IP addressing and routing  
+Protocols: **IP, ICMP, ARP**
+
+---
+
+## ### **Layer 1 — Network Access**
+Combines OSI Layers 1 & 2  
+Covers:
+- MAC addresses  
+- Frames  
+- Physical transmission  
+
+---
+
+# ## **4. OSI vs TCP/IP Mapping**
+| **OSI Model (7)** | **TCP/IP Model (4)** |
+|-------------------|-----------------------|
+| Application (7)   | Application           |
+| Presentation (6)  | Application           |
+| Session (5)       | Application           |
+| Transport (4)     | Transport             |
+| Network (3)       | Internet              |
+| Data Link (2)     | Network Access        |
+| Physical (1)      | Network Access        |
+
+---
+
+# ## **5. Data Encapsulation: How Data Moves Through Layers**
+When a device sends data, each layer **adds its own header**, creating a wrapped bundle. This process is called **encapsulation**.
+
+### **Sender Side (Encapsulation Flow)**  
+**Application Layer:** Creates data  
+↓  
+**Transport Layer:** Wraps data → *Segment* (TCP) / *Datagram* (UDP)  
+↓  
+**Internet Layer:** Adds IP header → *Packet*  
+↓  
+**Network Access Layer:** Adds MAC header & trailer → *Frame*  
+↓  
+**Physical Layer:** Converts to bits → *Bits on wire*
+
+---
+
+### **Receiver Side (De-encapsulation Flow)**  
+Bits → Frame → Packet → Segment → Data  
+Each layer removes its header and passes the data upward.
+
+---
+
+# ## **6. Why This Matters in Real Networking**
+Understanding these models helps you troubleshoot and design networks:
+
+- **Ping issues?** Layer 3 (IP/ICMP)  
+- **Website not loading?** Layer 7 (HTTP/DNS)  
+- **Slow transfer?** Layer 4 (TCP windows)  
+- **Wi-Fi issues?** Layers 1–2  
+- **Routing problems?** Layer 3  
+
+The models give a precise language to pinpoint failure points.
+
+---
+
+# ## **Conclusion**
+The OSI and TCP/IP models are foundational frameworks for understanding computer networking.  
+Together, they explain:
+
+- **How applications communicate**
+- **How data flows across networks**
+- **How devices on different networks interoperate**
+- **Where networking problems occur**
+
+Mastering these models is essential for anyone studying networking, cybersecurity, cloud, or IT engineering.
+
+---
+
+If you want, I can also write:  
+📌 A cheat sheet version  
+📌 A visual diagram-based version  
+📌 A practice Q&A set  
+📌 A downloadable PDF version  
+Just tell me!
